@@ -3,14 +3,17 @@ const nodemailer = require('nodemailer');
 
 module.exports = async (req, res) => {
 
-  res.setHeader('Access-Control-Allow-Origin', 'https://xcaptt.github.io'); 
+  const allowedOrigin = 'https://xcaptt.github.io';
+  res.setHeader('Access-Control-Allow-Origin', allowedOrigin); 
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST'); 
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); 
+
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
+ 
   if (req.method === 'POST') {
     const { name, email, message } = req.body;
 
@@ -18,7 +21,6 @@ module.exports = async (req, res) => {
     if (!name || !email || !message) {
       return res.status(400).json({ error: 'Todos os campos são obrigatórios!' });
     }
-
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
